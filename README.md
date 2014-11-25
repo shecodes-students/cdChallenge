@@ -1,4 +1,7 @@
-As student of she.code, I want to learn how to use cd to navigate a directory tree through a funny and interesting game.
+cdChallenge
+===========
+
+Application for She.code that create a random file tree and help learners to use the cd bash commands student of she.code, I want to learn how to use cd to navigate a directory tree through a funny and interesting game.
 
 * setting up a project strucutre
 
@@ -34,3 +37,4 @@ As student of she.code, I want to learn how to use cd to navigate a directory tr
     * figure out the least number of keystrokes required to get from start to target position (brute force approach?)
 
 * a hint system
+
