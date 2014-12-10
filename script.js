@@ -1,9 +1,10 @@
 
 var list = document.createElement('ul');
 
+var directoryList = ['data', 'text', 'home', 'index', 'style', 'custom', 'about', 'img', 'fonts', 'readme'];
+
 document.body.appendChild(list);
 function randomTree() {
-    var directoryList = ['data', 'text', 'home', 'index', 'style', 'custom', 'about', 'img', 'fonts', 'readme'];
     for (var i=0; i<directoryList.length; i++) {
         var element = document.createElement('li');
             directoryList.appendChild(element);
@@ -23,15 +24,19 @@ var maxBrunchWide = 3; //each node can have max 3 children
     this.name = randomFromDirectoryList(directoryList.length);
     this.parentNode = function () {
         do 
-        var paternityTest = randomFromDirectoryList(maxDepth); 
+        var paternityTest = randomFromDirectoryList(); 
         while (paternityTest === this.name)
         return paternityTest; // not sure what this do function returns!
         // how do I make it so that the parentNode = output of function?
     };
-     this.childrenNode = randomFromDirectoryList(maxBrunchWide);
+    this.childrenNode = function() {
+	for (var i === 0; maxBrunchWide - 1; i++) {
+	this.childrenNode[i] = randomFromDirectoryList();
+	}	
+    };
 
-    function randomFromDirectoryList (max) {
-        var randomIndex = Math.floor(Math.random()*max);
+    function randomFromDirectoryList () {
+        var randomIndex = Math.floor(Math.random()*directoryList.length-1);
         var random = directoryList[randomIndex];
         return random;
     }
@@ -39,8 +44,5 @@ var maxBrunchWide = 3; //each node can have max 3 children
 
 
 //create random numbers between 1 and directoryList.length to pick array values
-
-
-
 
 }

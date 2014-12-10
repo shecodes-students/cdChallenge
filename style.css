@@ -11,3 +11,8 @@
 li:before {
     content: '-- ';    
 }
+ul:before {
+	border: 1px black;
+}
+
+

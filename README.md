@@ -39,4 +39,3 @@ Task breakdown
 * score system
     * figure out the least number of keystrokes required to get from start to target position (brute force approach?)
 * a hint system
-
