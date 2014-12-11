@@ -1,17 +1,21 @@
 var directoryList = ['data', 'text', 'home', 'index', 'style', 'custom', 'about', 'img', 'fonts', 'readme'];
 
-function Node(maxDeep, maxBrothers){
-    //var random = directoryList[Math.floor(Math.random()*directoryList.length-1)];
-    if( maxDeep > 0 ){
-        for( var i = 0; i <= maxBrothers; i++ ){
-            this['child-' + i] = new Node(maxDeep - 1, 0); //0 become a random number
+function makeNode(maxGenerations, maxSiblings){
+    var node = {};
+    if (maxGenerations > 0) {
+        for (var i = 0; i <= maxSiblings; i++) {
+            var randomGenerations = Math.floor( Math.random() * (maxGenerations-1));
+            var randomName = directoryList[Math.floor(Math.random()*directoryList.length)];
+            var randomSiblings = Math.floor( Math.random() * maxSiblings );
+            // we need a way to prevent the same random name to be generated twice
+            // (because this would simply overwrite an existing propery)
+            node[randomName] = makeNode(randomGenerations, randomSiblings);
         }
-    } return;
+    }
+    return;
 }
 
-var randomNum = Math.floor( Math.random() * 10 );
-var randomBrothers = Math.floor( Math.random() * 5 );
-var node = new Node(randomNum, randomBrothers);
+var node = makeNode(5, 3);
 console.log(node);
 
 /*
@@ -23,5 +27,4 @@ html.innerHTML =+ "</ul>";
 
 // node.render function
 //html.ChildNode = "<li>"+ random +"</li>";
-
 
