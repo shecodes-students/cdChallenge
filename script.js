@@ -1,36 +1,37 @@
 var directoryList = ['data', 'text', 'home', 'index', 'style', 'custom', 'about', 'img', 'fonts', 'readme'];
+var nodeCollection =[];
+function Node (randomGenerations, randomSiblings, randomName, parentNode) {
+    this.randomGenerations = randomGenerations;
+    this.randomGenerations = randomGenerations;
+    this.randomGenerations = randomGenerations;
+    this.parentNode = parentNode;
+}
 
-var uniqueKey = 0;
-function makeNode(maxGenerations, maxSiblings, uniqueKey){
-    var node = {};
-    node.name = name;
+function makeNode(maxGenerations, maxSiblings, name, parentNode){
+    var node = new Node();
     if (maxGenerations > 0) {
-        for (var i = 1; i <= maxSiblings; i++) {
+        for (var i = 0; i < maxSiblings; i++) {
             var randomGenerations = Math.floor( Math.random() * (maxGenerations-1));
             var randomName = directoryList[Math.floor(Math.random()*directoryList.length)];
             var randomSiblings = Math.floor( Math.random() * maxSiblings );
-            // we need a way to prevent the same random name to be generated twice
-            // (because this would simply overwrite an existing propery)
-            uniqueKey ++;
-            node[randomName] = makeNode(randomGenerations, randomSiblings, uniqueKey);
+            node[name] = makeNode(randomGenerations, randomSiblings, randomName, node);
+        nodeCollection.push(node);
         }
     }
-    return node;
-}
-
-function addRoot (node) {
+    console.log(node);
+    var root = {};
+    root.name = 'root';
     var fileTree = {root: node};
-    console.log(fileTree);
-    console.log(fileTree.root);
-    return fileTree, uniqueKey;
+    nodeCollection.unshift(root);
+//    console.log(nodeCollection);
+    return node, nodeCollection;
 }
-addRoot(makeNode(3,5));
-
-function pickRandomStartAndTargetPosition (fileTree) {
-    var startObjectKey;  
-}
+makeNode(3,5,'root', '');
+//createRoot(node);
+//console.log(nodeCollection);
 
 
+/*
 var html = "";
 html.text += "<ul> /root";
 html.text += node.randomName;
@@ -39,7 +40,7 @@ html.text += node.randomGenerations;
 html.text += "</ul>";
 // node.render function
 //html.ChildNode = "<li>"+ random +"</li>";
-
+*/
 module.exports = {
     makeNode: makeNode
 };
