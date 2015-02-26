@@ -1,47 +1,39 @@
-var directoryList = ['data', 'text', 'home', 'index', 'style', 'custom', 'about', 'img', 'fonts', 'readme'];
-var nodeCollection =[];
-function Node (randomGenerations, randomSiblings, randomName, parentNode) {
-    this.randomGenerations = randomGenerations;
-    this.randomGenerations = randomGenerations;
-    this.randomGenerations = randomGenerations;
+var nodeCollection = [];
+var directoryList = ['data', 'source', 'html', 'server','public','private', 'bin', 'user', 'etc', 'modules', 'temp'];
+var nestedList = '';
+function Node(maxGenerations, maxSiblings, name, parentNode) {
+    nodeCollection.push(this);
+    this.name = name;
     this.parentNode = parentNode;
-}
-
-function makeNode(maxGenerations, maxSiblings, name, parentNode){
-    var node = new Node();
     if (maxGenerations > 0) {
         for (var i = 0; i < maxSiblings; i++) {
             var randomGenerations = Math.floor( Math.random() * (maxGenerations-1));
-            var randomName = directoryList[Math.floor(Math.random()*directoryList.length)];
+            var randomName; //defined here, otherwise JSlint triggers error
+            while (this[randomName]) { //make sure name isn't repeated
+                randomName = directoryList[Math.floor(Math.random()*directoryList.length)];
+            }
             var randomSiblings = Math.floor( Math.random() * maxSiblings );
-            node[name] = makeNode(randomGenerations, randomSiblings, randomName, node);
-        nodeCollection.push(node);
+            this[randomName] = new Node(randomGenerations, randomSiblings, randomName, this);
         }
     }
-    console.log(node);
-    var root = {};
-    root.name = 'root';
-    var fileTree = {root: node};
-    nodeCollection.unshift(root);
-//    console.log(nodeCollection);
-    return node, nodeCollection;
+
+    this.toHTML = function() {
+        if (this.parentNode === '') {
+            nestedList = '<ul>' + this[name];
+        } else {
+            nestedList += '<li>' + this[randomName] + '</li>';
+        }
+        nestedList += '</ul>';
+    };
+    $('#tree').html(nestedList);
+    return nestedList, this;
 }
-makeNode(3,5,'root', '');
-//createRoot(node);
-//console.log(nodeCollection);
+var root = new Node(4,2,'root', '');
+console.log(nestedList);
+console.log(root.toHTML());
 
-
-/*
-var html = "";
-html.text += "<ul> /root";
-html.text += node.randomName;
-html.text += node.randomSiblings;
-html.text += node.randomGenerations;
-html.text += "</ul>";
-// node.render function
-//html.ChildNode = "<li>"+ random +"</li>";
-*/
 module.exports = {
-    makeNode: makeNode
+    Node: Node,
+    nestedList : nestedList
 };
 
