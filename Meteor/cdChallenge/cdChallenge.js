@@ -17,7 +17,7 @@ function Node(maxGenerations, maxSiblings, name, parentNode) {
         }
     }
 
-    this.toHTML = function() { //probably have to do it recursively as well?
+/*    this.toHTML = function() { //probably have to do it recursively as well?
         if (this.parentNode === '') {
             nestedList = '<ul>' + this[name];
         } else {
@@ -26,16 +26,18 @@ function Node(maxGenerations, maxSiblings, name, parentNode) {
         nestedList += '</ul>';
     };
     return nestedList;
+*/
 }
+
 var root = new Node(4,2,'root', '');
-console.log(nestedList);
-console.log(root.toHTML());
 
-module.exports = {
-    Node: Node,
-    nestedList : nestedList
-};
-
+if (Meteor.isClient) {
+    Template.body.helpers ({
+        'makeTree': function() {
+            return nodeCollection;
+        }
+    });
+}
 //need to find a way to display nestedList result in the html
 
 

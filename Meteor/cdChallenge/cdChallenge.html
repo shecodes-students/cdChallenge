@@ -3,11 +3,18 @@
 </head>
 
 <body>
-    <p>hello world</p>
+    <h1>CdChallenge</h1>
+    {{> displayTree}}
 
 </body>
-<!--possibility to have templates to display js results
-<template name=printTree>
-  
+
+<template name = 'displayTree'>
+<ul>
+    {{#each nodeCollection}}
+    <li>{{nodeCollection}}</li>
+    {{/each}}
+</ul>
 </template>
+<!--possibility to have templates to display js results
+  
 -->
