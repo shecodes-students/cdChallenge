@@ -28,15 +28,14 @@ function makeTree(name, maxGenerations, maxNumberOfChildren){
     }
     return node;
 }
-function createListOfPaths(tree, childrenPath) {
-   // childrenPath = [];
-    //childrenPath.push(tree.name);
-    for (var i=0;i<tree.children.length - 1; i++) {
-            
-        childrenPath.push(tree.name +'/' + childrenpath.join());//tree.children[i].name);
-        childrenPath = childrenPath.concat(createListOfPaths(tree, childrenPath));
+function createListOfPaths(tree, prefix) {
+    var result = [];
+    var currentPath = prefix+tree.name+"/";
+    result = result.concat(currentPath);
+    for (var i=0;i<tree.children.length; i++) {
+        result = result.concat(createListOfPaths(tree.children[i], currentPath));
     }        
-    return childrenPath;
+    return result;
 }
 
 function makeHTMLForTree(tree) {
@@ -54,5 +53,5 @@ function makeHTMLForTree(tree) {
 var tree = makeTree('ROOT', 9, 13);
 console.log(inspect(tree, false, null, true));
 
-console.log(createListOfPaths(tree, []));
+console.log(createListOfPaths(tree, ''));
 //document.querySelector('#content').innerHTML = 'asdf';
