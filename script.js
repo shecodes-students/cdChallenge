@@ -31,12 +31,45 @@ function makeTree(name, maxGenerations, maxNumberOfChildren){
 function createListOfPaths(tree, prefix) {
     var result = [];
     var currentPath = prefix+tree.name+"/";
+    tree.path = currentPath;
+    console.log(tree.path);
     result = result.concat(currentPath);
     for (var i=0;i<tree.children.length; i++) {
         result = result.concat(createListOfPaths(tree.children[i], currentPath));
     }        
     return result;
 }
+
+function pickStartAndEndPoint(paths) {
+    var indexStart, indexEnd;
+    do {
+        indexStart = Math.floor(Math.random()*paths.length);
+        indexEnd = Math.floor(Math.random()*paths.length);
+    } while (indexStart === indexEnd);
+    var startObject = paths[indexStart];
+    var endObject = paths[indexEnd];
+    var result = {
+        start: startObject,
+        end: endObject
+    };
+    console.log(result);
+    return result;
+}
+
+function findStartEndConnector(startEndPoint, tree) {
+    var splitStart = startEndPoint.start.split('/');
+    var splitEnd =startEndPoint.end.split('/');
+    var common = [];
+    for (var i = 0; i< Math.min(splitStart.length, splitEnd.length) ;i++) {
+        if  (splitStart[i] === splitEnd[i]){
+            common.push(splitStart[i]);
+        }
+    }
+    return common;
+}
+
+
+//DISPLAY
 
 function makeHTMLForTree(tree) {
     var html = '<div>' + tree.name + '</div>';
@@ -47,11 +80,14 @@ function makeHTMLForTree(tree) {
         html += '</li>';
     }        
     html += '</ul>';
+//    console.log(html);
     return html;
 }
 
 var tree = makeTree('ROOT', 9, 13);
-console.log(inspect(tree, false, null, true));
-
-console.log(createListOfPaths(tree, ''));
-//document.querySelector('#content').innerHTML = 'asdf';
+//makeHTMLForTree(tree);
+var paths = createListOfPaths(tree, '');
+var startEndPoint = pickStartAndEndPoint(paths);
+console.log(findStartEndConnector(startEndPoint));
+//console.log(inspect(tree, false, null, true));
+//document.querySelector('#content').innerHTML = html;
